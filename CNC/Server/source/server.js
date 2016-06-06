@@ -1,10 +1,15 @@
 
 var express = require('express');
+var bodyParser = require('body-parser');
+var cors    = require('cors');
 var app     = express();
 var router  = express.Router();
 
+app.use(cors());
+app.use(bodyParser.json()); 
 
-var ROUTES  = [ 'welcome' ];
+
+var ROUTES  = [ 'welcome', 'status', 'tasks' ];
 
 if (ROUTES.length > 0) {
 
