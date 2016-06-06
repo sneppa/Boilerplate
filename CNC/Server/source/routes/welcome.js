@@ -1,5 +1,5 @@
 
-module.exports = function(router) {
+module.exports = function(router, tokens) {
         
 	router.get('/Welcome', (req, res) => {
 		res.status(200);

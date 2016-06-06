@@ -4,7 +4,7 @@ var bots = [{'id': 0, 'ip': '127.0.0.1', 'task': 1, 'workload': 0.0},
             {'id': 2, 'ip': '127.0.0.3', 'task': 3, 'workload': 1.0}, 
             {'id': 3, 'ip': '127.0.0.4', 'task': 4, 'workload': 0.0}]
 
-module.exports = function(router) {
+module.exports = function(router, tokens) {
         
 	router.get('/Status', (req, res) => {
 		res.status(200);
@@ -12,20 +12,26 @@ module.exports = function(router) {
 	});
 
 	router.post('/Status', (req, res) => {
-//		res.status(403);
-		res.status(200);
-                
+            
             var found = false;
-                
-            for (i = 0; i < bots.length; i++)
+            
+            if (!inArray(req.headers.token, tokens))
             {
-                bot = bots[i];
-                
-                if (bot.id == req.body.id)
+                res.status(403);
+            }
+            else
+            {
+                res.status(200);
+                for (i = 0; i < bots.length; i++)
                 {
-                    console.log(req.body.id+ " = "+bot.id);
-                    bot.workload = req.body.status ? 1 : 0;
-                    found = true;
+                    bot = bots[i];
+
+                    if (bot.id == req.body.id)
+                    {
+    //                    console.log(req.body.id+ " = "+bot.id);
+                        bot.workload = req.body.status ? 1 : 0;
+                        found = true;
+                    }
                 }
             }
             
@@ -33,3 +39,10 @@ module.exports = function(router) {
 	});
 };
 
+function inArray(needle, haystack) {
+    var length = haystack.length;
+    for(var i = 0; i < length; i++) {
+        if(haystack[i] == needle) return true;
+    }
+    return false;
+}
