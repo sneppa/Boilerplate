@@ -1,9 +1,11 @@
+var fs    = require('fs');
 
-var bots = [{'id': 1, 'ip': '127.0.0.1', 'task': 1, 'workload': 0.0}, 
-            {'id': 2, 'ip': '127.0.0.2', 'task': 2, 'workload': 1.0}, 
-            {'id': 3, 'ip': '127.0.0.3', 'task': 3, 'workload': 1.0}, 
-            {'id': 4, 'ip': '127.0.0.4', 'task': 4, 'workload': 0.0}]
-
+var bots;
+fs.readFile('bots.json', (err, data) => {
+  if (err) throw err;
+  bots = JSON.parse(data);
+});
+       
 module.exports = function(router, tokens) {
         
 	router.get('/Status', (req, res) => {
@@ -36,6 +38,8 @@ module.exports = function(router, tokens) {
                         if (req.body.workload)
                             bot.workload = req.body.workload;
                         
+                        saveBots();
+                        
                         found = true;
                     }
                 }
@@ -64,6 +68,9 @@ module.exports = function(router, tokens) {
                     {
     //                    console.log(req.body.id+ " = "+bot.id);
                         bot.workload = req.body.status ? 1 : 0;
+                        
+                        saveBots();
+                        
                         found = true;
                     }
                 }
@@ -79,4 +86,11 @@ function inArray(needle, haystack) {
         if(haystack[i] == needle) return true;
     }
     return false;
+}
+
+function saveBots() {
+    fs.writeFile('bots.json', JSON.stringify(bots), (err) => {
+    if (err) throw err;
+    console.log('Bots gespeichert');
+    });
 }

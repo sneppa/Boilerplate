@@ -1,5 +1,11 @@
+var fs    = require('fs');
 
-var tasks = [{id: 1, type: 'hash-md5', data: { input: 'pupsen', output: null }}];
+var tasks;
+fs.readFile('tasks.json', (err, data) => {
+  if (err) throw err;
+  tasks = JSON.parse(data);
+});
+
 var allowedTypes = ["hash-sha256", "hash-md5", "crack-md5"];
 
 module.exports = function(router, tokens) {
@@ -36,6 +42,8 @@ module.exports = function(router, tokens) {
                             if (req.body.data.output)
                                 task.data.output = req.body.data.output;
                         }
+                    
+                        saveTasks();
                         
                         found = true;
                     }
@@ -64,6 +72,8 @@ module.exports = function(router, tokens) {
                     newtask.data.output = null;
 
                     tasks.push(newtask);
+                    
+                    saveTasks();
 
                     inserted = true;
                 }
@@ -90,4 +100,11 @@ function inArray(needle, haystack) {
         if(haystack[i] == needle) return true;
     }
     return false;
+}
+
+function saveTasks() {
+    fs.writeFile('tasks.json', JSON.stringify(tasks), (err) => {
+    if (err) throw err;
+    console.log('Tasks gespeichert');
+    });
 }
