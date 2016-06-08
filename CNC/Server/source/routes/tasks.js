@@ -1,15 +1,52 @@
 
-var tasks = [{id: 0, type: 'hash-md5', data: { input: 'pupsen', output: null }}];
+var tasks = [{id: 1, type: 'hash-md5', data: { input: 'pupsen', output: null }}];
 var allowedTypes = ["hash-sha256", "hash-md5", "crack-md5"];
 
 module.exports = function(router, tokens) {
         
 	router.get('/Tasks', (req, res) => {
-		res.status(200);
-		res.json(tasks);
+            console.log("Rufe Tasks ab.");
+            res.status(200);
+            res.json(tasks);
+	});
+
+	router.post('/Tasks/:id', (req, res) => {
+            console.log("Ändere Task: "+req.params.id);
+            
+            var found = false;
+            
+            if (!inArray(req.headers.token, tokens))
+            {
+                res.status(403);
+            }
+            else
+            {
+                for (i = 0; i < tasks.length; i++)
+                {
+                    task = tasks[i];
+                    
+                    if (task.id == req.params.id)
+                    {
+                        if (req.body.type && inArray(req.body.type, allowedTypes))
+                            task.type = req.body.type;
+                        if (req.body.data)
+                        {
+                            if (req.body.data.input)
+                                task.data.input = req.body.data.input;
+                            if (req.body.data.output)
+                                task.data.output = req.body.data.output;
+                        }
+                        
+                        found = true;
+                    }
+                }
+            }
+            
+            res.json({ 'message': found?'OK':'NOT OK' });
 	});
 
 	router.post('/Tasks', (req, res) => {
+            console.log("Füge Task hinzu.");
             
             inserted = false;
             if (!inArray(req.headers.token, tokens))
@@ -42,8 +79,8 @@ function getNewId()
 {
     maxid = 0;
     for (i = 0; i < tasks.length; i++)
-        if (maxid < i)
-            maxid = i;
+        if (maxid < tasks[i].id)
+            maxid = tasks[i].id;
     return maxid+1;
 }
 
