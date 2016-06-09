@@ -15,6 +15,25 @@ module.exports = function(router, tokens) {
             res.status(200);
             res.json(tasks);
 	});
+        
+	router.get('/Tasks/:id', (req, res) => {
+            console.log("Rufe Task "+req.params.id+" ab.");
+            
+            found = false;
+            for (i = 0; i < tasks.length; i++)
+            {
+                task = tasks[i];
+
+                if (task.id == req.params.id)
+                {
+                    res.json(task);
+                    found = true;
+                }
+            }
+            
+            if (!found)
+                res.json({ 'message': 'NOT OK' });
+	});
 
 	router.post('/Tasks/:id', (req, res) => {
             console.log("Ändere Task: "+req.params.id);

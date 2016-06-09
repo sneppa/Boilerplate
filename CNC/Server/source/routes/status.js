@@ -13,6 +13,25 @@ module.exports = function(router, tokens) {
             res.status(200);
             res.json(bots);
 	});
+        
+	router.get('/Status/:id', (req, res) => {
+            console.log("Rufe Bot "+req.params.id+" ab.");
+            
+            found = false;
+            for (i = 0; i < bots.length; i++)
+            {
+                bot = bots[i];
+
+                if (bot.id == req.params.id)
+                {
+                    res.json(bot);
+                    found = true;
+                }
+            }
+            
+            if (!found)
+                res.json({ 'message': 'NOT OK' });
+	});
 
 	router.post('/Status/:id', (req, res) => {
             console.log("Ändere Bot: "+req.params.id);
