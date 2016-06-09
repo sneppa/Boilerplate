@@ -1,0 +1,213 @@
+body, html {
+    margin: 0;
+    font-family: "Open Sans", Arial, sans-serif;
+    background-color: #444343;
+}
+
+body * {
+    box-sizing: border-box;
+}
+/* -------------------------- Seitenleiste / Menü -------------------------- */
+aside{
+    background-color: #302D2D;
+    position:fixed;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    overflow: auto;
+    width: 150px;
+    box-shadow: 0 0 5px 0 rgb(0,0,0);
+    float: left;
+    z-index: 7;
+}
+menu{
+    position: static;
+    float:left;
+    margin-right: 0px;
+    width: 150px;
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+}
+menu li a {
+    text-decoration: none;
+    width: 100%;
+    padding: 10px;
+    display: block;
+    color: #888888;
+    transition: background 0.2s;
+}
+
+menu li a:hover {
+    background: #545050;
+}
+
+menu li a:active {
+    background: #6D6A6A;
+}
+
+menu li a.active {
+    background: #262424;
+}
+
+menu h2{
+    background: #141313;
+    color: rgb(255,255,255);
+    margin: 0px;
+    padding: 10px;
+    height: 50px;
+    font-size: 24px;
+}
+
+/* -------------------------- Rechte Seite / Tabelle -------------------------- */
+header {
+    padding-left: 170px;
+    float:right;
+    margin-right: 0px;
+    width: 100%;
+    text-align: right;
+    background: #444343;
+    padding-right: 20px;
+    height: 50px
+}
+header h1 {
+    margin-top: 0px;
+    color: #FFF;
+    font-size: 24px;
+    line-height: 50px;
+}
+
+
+/* Main Content */
+
+main {
+    clear: right;
+    float: right;
+    height: auto;
+    overflow: hidden;
+    left: 150px;
+    top: 50px;
+    right: 0px;
+    bottom: 0px;
+    position: absolute;
+    width: auto;
+}
+main > section {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+    top: 100%;
+    overflow: auto;
+    transition: top .5s;
+    background-color: #FFF;
+    z-index: 5;
+}
+main > section.active {
+    top: 0px;
+    z-index: 6;
+}
+
+
+/* Tabellen */
+
+table {
+    text-align: left;
+    border: 1px solid #EEECEC;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+table thead {
+    background: #2EA2CC;
+    color: rgb(255,255,255);
+}
+
+table th{
+    padding: 3px 5px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    cursor: pointer;
+    border-right: 1px solid #EEECEC;
+}
+table td{
+    border-right: 1px solid #EEECEC;
+    padding: 3px 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 300px;
+}
+
+table tr {
+    width: 100%;
+    transition: background 0.2s;
+}
+table tr:nth-child(2n){
+    background: rgb(226, 226, 226);
+}
+table tbody tr:hover{
+    background: #B8DBBA;
+}
+
+
+/* Taks */
+#form 
+{
+    border: 1px solid #EEECEC;
+    background: #EEECEC;
+    margin: 20px 0px;
+    padding: 10px;
+}
+input, select {
+    margin: 10px 0px;
+}
+label
+{
+    width: 150px;
+    display: inline-block;
+}
+input[type=text], select
+{
+    border-radius: 3px;
+    border: 1px solid #EEECEC;
+    min-width: 150px;
+}
+#refresh
+{
+    width: 100%;
+    margin-top: 20px;
+    font-size: 18px;
+    height: 40px;
+}
+
+/* Toggle Buttons */
+
+input[type=button], input[type=submit]
+{
+    border: 0px;
+    border-radius: 3px;
+    height: 25px;
+    cursor: pointer;
+    background: #2EA2CC;
+    color: #FFF;
+    font-weight: bold;
+    margin: 2px;
+}
+
+#status-overview input.start, #status-overview input.stop {
+    background: #A3B745;
+}
+
+#status-overview input.stop {
+    background: #EA5340;
+    margin-right: 0px;
+}
+
+#status-overview input.start:hover {
+    background: rgb(92, 219, 134);
+}
+
+
+#status-overview input.stop:hover {
+    background: rgb(219, 94, 92);
+}
