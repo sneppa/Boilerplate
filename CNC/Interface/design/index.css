@@ -186,6 +186,30 @@ main section:target {
 	z-index: 2;
 }
 
+main section > div.table-wrapper {
+	display: block;
+	position: absolute;
+	top: 32px;
+	right: 32px;
+	bottom: 96px;
+	left: 32px;
+	overflow: auto;
+}
+
+main section > div.table-wrapper table td {
+	max-width: 200px;
+	overflow-x: hidden;
+	text-overflow: ellipsis;
+}
+
+main section table td {
+	text-align: center;
+}
+
+main section table td:first-child {
+	text-align: left;
+}
+
 
 
 /*

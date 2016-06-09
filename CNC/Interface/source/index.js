@@ -36,7 +36,8 @@ var toggle_status = function(id) {
 
 var _REST = function(options, callback) {
 
-	options = options || {};
+	options  = options || {};
+	callback = callback instanceof Function ? callback : function(result) { console.info('Response from ' + path + ':', result); };
 
 
 	var method = options.method || 'GET';
@@ -193,7 +194,6 @@ if (menu !== null) {
 
 	}
 
-
 	document.addEventListener('DOMContentLoaded', function() {
 		button.click();
 	});
@@ -246,6 +246,32 @@ if (menu !== null) {
 				method: 'GET',
 				path:   '/api/Tasks'
 			}, render);
+
+		};
+
+	}
+
+	var submit = section.querySelector('div.action-form button');
+	if (submit !== null) {
+
+		submit.onclick = function() {
+
+			var type  = section.querySelector('div.action-form select');
+			var input = section.querySelector('div.action-form input');
+
+
+			_REST({
+				method: 'POST',
+				path:   '/api/Tasks',
+				data:   {
+					id:   null,
+					type: type.value,
+					data: {
+						input:  input.value,
+						output: null
+					}
+				}
+			});
 
 		};
 
